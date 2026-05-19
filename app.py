@@ -69,9 +69,9 @@ class InvokeResponse(BaseModel):
 
 # --- Endpoints ---
 
-@app.get("/ping")
-async def ping():
-    return {"message": "pong"}
+@app.get("/health")
+async def health():
+    return {"message": "ok"}
 
 @app.get("/tools")
 async def get_tools():
