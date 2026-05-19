@@ -1,0 +1,185 @@
+{
+  "agent_id": "langchain-bedrock-chatbot",
+  "version": "1.0.0",
+  "name": "LangChain Bedrock Chatbot",
+  "description": "A simple LangChain based chatbot using Bedrock Nova Lite with time and multiplication tools.",
+  "owner": {
+    "team": "sdlc",
+    "contact_email": "sdlc@example.com"
+  },
+  "line_of_business": "development",
+  "framework": {
+    "type": "langchain",
+    "version": "1.3.1"
+  },
+  "llm": {
+    "provider": "aws_bedrock",
+    "provider_friendly_name": "AWS Bedrock",
+    "model_family": "nova",
+    "model_name": "amazon.nova-lite-v1:0",
+    "model_id_bedrock": "amazon.nova-lite-v1:0",
+    "model_id_anthropic": null,
+    "model_id_vertex": null,
+    "version": "1.0",
+    "mode": "chat",
+    "input_modalities": [
+      "text"
+    ],
+    "output_modalities": [
+      "text"
+    ],
+    "max_context_tokens": 128000,
+    "max_output_tokens": 8192,
+    "supports_tool_use": true,
+    "supports_extended_thinking": true,
+    "region": "us-east-1"
+  },
+  "runtime": {
+    "cpu": 512,
+    "memory": 1024,
+    "desired_count": 2
+  },
+  "sandbox": {
+    "health_endpoint": "/ping",
+    "invoke_endpoint": "/invoke",
+    "tools_endpoint": "/tools",
+    "auth": {
+      "type": "iam",
+      "header_name": null,
+      "secret_ref": null
+    },
+    "payload_contract": {
+      "content_type": "application/json",
+      "protocol": "http",
+      "request_example": {
+        "input": "What time is it?"
+      },
+      "request_schema": {
+        "type": "object",
+        "required": [
+          "input"
+        ],
+        "properties": {
+          "input": {
+            "type": "string",
+            "description": "User prompt sent to the agent"
+          }
+        }
+      }
+    }
+  },
+  "intended_capabilities": [
+    {
+      "id": "chatbot_support",
+      "name": "Chatbot Support",
+      "description": "Assist users with general queries and mathematical calculations using tools.",
+      "category": "development",
+      "risk_level": "low"
+    }
+  ],
+  "intended_boundaries": {
+    "must_not_do": [
+      "Delete jira issues",
+      "Modify jira issue content beyond suggested edits"
+    ],
+    "allowed_domains": [
+      "jira",
+      "development"
+    ],
+    "max_action_scope": "read-write-non-destructive"
+  },
+  "tools": [
+    {
+      "id": "multiply_numbers",
+      "name": "Multiply Numbers",
+      "description": "Multiplies two numbers. Useful for simple mathematical calculations.",
+      "type": "internal",
+      "resource": {
+        "service": "multiply_numbers",
+        "resource_identifier": "local"
+      },
+      "allowed_actions": [
+        "multiply_numbers"
+      ],
+      "rate_limits": {
+        "max_qps": 5,
+        "max_burst": 20
+      }
+    },
+    {
+      "id": "get_current_time",
+      "name": "Get Current Time",
+      "description": "Get the current local server time as a formatted string.",
+      "type": "internal",
+      "resource": {
+        "service": "get_current_time",
+        "resource_identifier": "local"
+      },
+      "allowed_actions": [
+        "get_current_time"
+      ],
+      "rate_limits": {
+        "max_qps": 5,
+        "max_burst": 20
+      }
+    }
+  ],
+  "data_sources": [],
+  "compliance_profile": {
+    "regimes": [
+      "GDPR",
+      "SOC2",
+      "ISO27001",
+      "Solvency_II",
+      "IRDAI"
+    ],
+    "data_residency": [
+      "EU",
+      "US",
+      "IN"
+    ],
+    "restricted_categories": [],
+    "insurance_specific": {
+      "line_of_business": "commercial_lines",
+      "policyholder_data_handling": "strict",
+      "claims_data_residency_enforced": true,
+      "actuarial_data_access": "restricted"
+    }
+  },
+  "guardrails": {
+    "system_prompt_version": "sdlc-architect-guardrails-v1",
+    "refusal_policy": "The agent must refuse any request outside sdlc architect capabilities or involving personal data that cannot be processed under GDPR.",
+    "blocked_content_categories": [
+      "hate",
+      "sexual_content",
+      "self_harm"
+    ],
+    "pii_redaction": {
+      "enabled": true,
+      "strategy": "mask"
+    },
+    "max_output_length": 1024,
+    "allowed_output_channels": [
+      "web_ui",
+      "jira_comment"
+    ]
+  },
+  "expected_quality": {
+    "target_accuracy": 0.90,
+    "max_hallucination_rate": 0.03,
+    "target_consistency": 0.95,
+    "benchmark_suites": [
+      "triage-bench-v1",
+      "routing-bench-v2"
+    ]
+  },
+  "org_policy_profile": {
+    "id": "default-enterprise-policy",
+    "version": "2026-05-01"
+  },
+  "tags": {
+    "business_unit": "customer_support",
+    "criticality": "medium",
+    "cost_center": "cs-1234"
+  }
+}

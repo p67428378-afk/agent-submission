@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+langchain
+langchain-aws
+boto3
+pydantic
