@@ -1,3 +1,4 @@
+import asyncio
 import os
 import re
 from datetime import datetime
@@ -149,7 +150,7 @@ async def invoke(request: InvokeRequest):
             SystemMessage(content=_SYSTEM_PROMPT),
             HumanMessage(content=request.input)
         ]
-        result = llm.invoke(msgs)
+        result = await asyncio.to_thread(llm.invoke, msgs)
         output_text = _extract_text(result.content)
         return InvokeResponse(output=_scrub_pii(output_text))
     except Exception as e:
@@ -158,4 +159,4 @@ async def invoke(request: InvokeRequest):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000, workers=4)
