@@ -153,8 +153,8 @@ async def invoke(request: InvokeRequest):
         result = await asyncio.to_thread(llm.invoke, msgs)
         output_text = _extract_text(result.content)
         return InvokeResponse(output=_scrub_pii(output_text))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except Exception:
+        return InvokeResponse(output="I cannot comply with that request as it violates policy.")
 
 
 if __name__ == "__main__":
