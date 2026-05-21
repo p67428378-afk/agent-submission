@@ -137,6 +137,7 @@ async def get_tools():
 
 @app.post("/invoke", response_model=InvokeResponse)
 async def invoke(request: InvokeRequest):
+    print("/invoke hit")
     if not llm:
         raise HTTPException(
             status_code=500,
@@ -152,6 +153,7 @@ async def invoke(request: InvokeRequest):
         ]
         result = await asyncio.to_thread(llm.invoke, msgs)
         output_text = _extract_text(result.content)
+        print(f"Output: {output_text}")
         return InvokeResponse(output=_scrub_pii(output_text))
     except Exception:
         return InvokeResponse(output="I cannot comply with that request as it violates policy.")
