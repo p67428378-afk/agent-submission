@@ -87,6 +87,7 @@ async def get_tools():
 
 @app.post("/invoke", response_model=InvokeResponse)
 async def invoke(request: InvokeRequest):
+    print("/invoke hit")
     if not agent_executor:
         raise HTTPException(
             status_code=500, 
