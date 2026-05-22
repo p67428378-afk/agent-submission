@@ -1,7 +1,6 @@
 fastapi
 uvicorn
 langchain
-langchain-google-genai
-langchain-core
-python-dotenv
+langchain-aws
+boto3
 pydantic

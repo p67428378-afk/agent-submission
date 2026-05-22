@@ -18,30 +18,34 @@
   },
   "llm": {
     "provider": "aws_bedrock",
-    "provider_friendly_name": "AWS Bedrock",
+    "provider_friendly_name": "nova",
     "model_family": "nova",
-    "model_name": "amazon.nova-lite-v1:0",
+    "model_name": "nova-lite",
     "model_id_bedrock": "amazon.nova-lite-v1:0",
     "model_id_anthropic": null,
     "model_id_vertex": null,
-    "version": "1.0",
+    "model_id_gemini": null,
+    "version": "1",
     "mode": "chat",
     "input_modalities": [
-      "text"
+      "text",
+      "image"
     ],
     "output_modalities": [
       "text"
     ],
-    "max_context_tokens": 128000,
-    "max_output_tokens": 8192,
+    "max_context_tokens": 1000000,
+    "max_output_tokens": 65536,
     "supports_tool_use": true,
-    "supports_extended_thinking": true,
-    "region": "us-east-1"
+    "supports_extended_thinking": false,
+    "region": null
   },
   "runtime": {
     "cpu": 1024,
     "memory": 2048,
-    "desired_count": 2
+    "desired_count": 2,
+    "region": "us-east-1",
+    "secrets": []
   },
   "sandbox": {
     "health_endpoint": "/health",
@@ -128,6 +132,7 @@
       }
     }
   ],
+  "external_services": [],
   "data_sources": [],
   "compliance_profile": {
     "regimes": [
