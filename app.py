@@ -124,6 +124,7 @@ class InvokeResponse(BaseModel):
 
 
 @app.get("/health")
+@app.get("/ping")
 async def health():
     return {"message": "ok"}
 
@@ -140,6 +141,7 @@ async def get_tools():
     ]}
 
 @app.post("/invoke", response_model=InvokeResponse)
+@app.post("/invocations", response_model=InvokeResponse)
 async def invoke(request: InvokeRequest):
     if not llm:
         raise HTTPException(
