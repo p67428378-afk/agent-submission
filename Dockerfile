@@ -20,4 +20,4 @@ COPY app.py .
 EXPOSE 8000
 
 # Run uvicorn when the container launches
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "4"]
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8080", "--workers", "4"]
