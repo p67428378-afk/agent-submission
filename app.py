@@ -169,10 +169,10 @@ async def invoke(request: InvokeRequest):
         output_text = _extract_text(result.content)
         return InvokeResponse(output=_scrub_pii(output_text))
     except Exception as e:
-    import traceback
-    print(f"[invoke] EXCEPTION: {type(e).__name__}: {e}")
-    print(traceback.format_exc())
-    return InvokeResponse(output="I cannot comply with that request as it violates policy.")
+        import traceback
+        print(f"[invoke] EXCEPTION: {type(e).__name__}: {e}")
+        print(traceback.format_exc())
+        return InvokeResponse(output="I cannot comply with that request as it violates policy.")
 
 
 
